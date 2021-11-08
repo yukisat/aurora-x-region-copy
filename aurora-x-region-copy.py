@@ -1,6 +1,7 @@
 import json
 import boto3
 import os
+import re
 
 def lambda_handler(event, context):
     
@@ -10,7 +11,7 @@ def lambda_handler(event, context):
       message_dist = json.loads(message_unicode)
       SourceDBClusterSnapshotId = message_dist['Source ARN']
       SourceSnapshotName = message_dist['Source ID']
-      SourceSnapshotName = SourceSnapshotName.replace('rds:', '')
+      SourceSnapshotName = re.sub('rds\:', '', SourceSnapshotName)
       EventId = message_dist['Event ID']
       EventId = EventId.split("#")
       EventId_dist = EventId[1]
